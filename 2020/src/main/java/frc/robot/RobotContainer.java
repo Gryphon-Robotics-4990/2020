@@ -18,7 +18,7 @@ public class RobotContainer {
 
     //TODO Add drivetrain commands
     private final TeleopTankDriveCommand m_teleopTankDriveCommand = new TeleopTankDriveCommand(m_drivetrain);
-    private final RunShooterCommand m_RunShooterCommand = new RunShooterCommand(m_shooter);
+    private final RunShooterCommand m_runShooterCommand = new RunShooterCommand(m_shooter);
     
 
 
@@ -29,13 +29,12 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-
         m_teleopTankDriveCommand.setSuppliers(() -> joystickDrive.getRawAxis(AxisF310.JoystickLeftY), () -> joystickDrive.getRawAxis(AxisF310.JoystickRightY));
     }
 
     private void configureDefaultCommands() {
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopTankDriveCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_RunShooterCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_runShooterCommand);
     }
 
     public Command getAutonomousCommand() {
