@@ -22,7 +22,7 @@ public class LimelightTargetCommand extends CommandBase {
         //Because PID needs to rotate base
         m_drive.setDriveMode(DriveMode.Arcade);
 
-        m_pidS = new PIDController(LIMELIGHT_SHOOTER_KP, LIMELIGHT_SHOOTER_KI, LIMELIGHT_SHOOTER_KD);
+        m_pidS = new PIDController(SHOOTER_FIRE_KP, SHOOTER_FIRE_KI, SHOOTER_FIRE_KD);
         m_pidD = new PIDController(LIMELIGHT_DRIVETRAIN_KP, LIMELIGHT_DRIVETRAIN_KI, LIMELIGHT_DRIVETRAIN_KD);
     }
 

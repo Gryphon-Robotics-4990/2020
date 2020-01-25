@@ -14,9 +14,11 @@ public class RobotContainer {
     private final JoystickF310 joystickOperator = new JoystickF310(PORT_JOYSTICK_OPERATOR);
 
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
 
     //TODO Add drivetrain commands
     private final TeleopTankDriveCommand m_teleopTankDriveCommand = new TeleopTankDriveCommand(m_drivetrain);
+    private final RunShooterCommand m_RunShooterCommand = new RunShooterCommand(m_shooter);
     
 
 
@@ -33,6 +35,7 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopTankDriveCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_RunShooterCommand);
     }
 
     public Command getAutonomousCommand() {

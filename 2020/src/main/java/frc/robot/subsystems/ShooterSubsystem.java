@@ -6,22 +6,20 @@ import static frc.robot.Constants.*;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX m_fireMotor;
-    private final WPI_TalonSRX m_aimMotor;
+    private final WPI_TalonSRX m_motor;
 
     public ShooterSubsystem() {
-        m_fireMotor = new WPI_TalonSRX(CAN_SHOOTER_FIRE_TALONSRX);
-        m_aimMotor = new WPI_TalonSRX(CAN_SHOOTER_AIM_TALONSRX);
+        m_motor = new WPI_TalonSRX(CAN_SHOOTER_FIRE_TALONSRX);
     }
 
     @Override
     public void periodic() {}
 
     public void fire(double speed) {
-        m_fireMotor.set(speed);
+        m_motor.set(speed);
     }
 
     public double getRateFire() {
-        return m_fireMotor.getSelectedSensorVelocity() * SHOOTER_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+        return m_motor.getSelectedSensorVelocity() * SHOOTER_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
 }

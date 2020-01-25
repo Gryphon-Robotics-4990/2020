@@ -28,9 +28,10 @@ public final class Constants {
     public static double DRIVETRAIN_ARCADE_KI = 0.1;
     public static double DRIVETRAIN_ARCADE_KD = 0.1;
 
-    public static double LIMELIGHT_SHOOTER_KP = 0.1;
-    public static double LIMELIGHT_SHOOTER_KI = 0.1;
-    public static double LIMELIGHT_SHOOTER_KD = 0.1;
+    public static double SHOOTER_FIRE_KP = 0.1;
+    public static double SHOOTER_FIRE_KI = 0.1;
+    public static double SHOOTER_FIRE_KD = 0.1;
+    
 
     public static double LIMELIGHT_DRIVETRAIN_KP = 0.1;
     public static double LIMELIGHT_DRIVETRAIN_KI = 0.1;
