@@ -14,6 +14,11 @@ public class TargetFinder {
         //
     }
 
+
+    public static double findShooterVelocityToTarget() {
+        double d = findDistanceToTarget(), h = TARGET_HEIGHT - LIMELIGHT_HEIGHT + d * AIR_RESISTANCE_FACTOR, a = SHOOTER_ANGLE;
+
+    }
     
     public static double findShooterAngleToTarget(double velocity) {
         //Returns optimal firing angle given a velocity

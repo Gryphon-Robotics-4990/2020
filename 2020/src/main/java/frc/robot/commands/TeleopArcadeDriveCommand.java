@@ -28,7 +28,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_drive.drive(m_speedSupplier.getAsDouble(), -1 * m_pid.calculate(m_rotationSupplier.getAsDouble(), m_drive.getGyroRate()));
+        m_drive.drive(m_speedSupplier.getAsDouble(), -1 * m_pid.calculate(m_drive.getGyroRate(), m_rotationSupplier.getAsDouble()));
     }
 
 }
