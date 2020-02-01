@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -20,7 +22,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private final AHRS m_gyro;
 
-    private final DifferentialDrive m_drive;
+    //private final DifferentialDrive m_drive;
     
     private final DifferentialDriveKinematics m_kinematics;
     private final DifferentialDriveOdometry m_odometry;
@@ -37,18 +39,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightVictor.configFactoryDefault();
 
         m_leftTalon.setSensorPhase(true);
+        m_rightTalon.setSensorPhase(true);
         //m_leftVictor.setInverted(true);
 
         m_leftVictor.follow(m_leftTalon,FollowerType.PercentOutput);
         m_rightVictor.follow(m_rightTalon,FollowerType.PercentOutput);
 
-        m_drive = new DifferentialDrive(m_leftTalon, m_rightTalon);
+        //m_drive = new DifferentialDrive(m_leftTalon, m_rightTalon);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_gyro.reset();
 
         m_kinematics = new DifferentialDriveKinematics(DRIVETRAIN_TRACKWIDTH_METERS);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
+        configureTalonClosedLoops();
     }
 
     @Override
@@ -57,12 +61,29 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()), getDistanceLeft(), getDistanceRight());
     }
 
+    private void configureTalonClosedLoops() {
+        m_leftTalon.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 5);
+        m_leftTalon.config_kP(0, 0.5);
+        m_leftTalon.config_kI(0, 0.0);
+        m_leftTalon.config_kD(0, 15);
+        m_leftTalon.config_kF(0, 0.3);
+
+        m_rightTalon.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 5);
+        m_rightTalon.config_kP(0, 0.5);
+        m_rightTalon.config_kI(0, 0.0);
+        m_rightTalon.config_kD(0, 15);
+        m_rightTalon.config_kF(0, 0.3);
+    }
+
     public void tankDrive(double left, double right) {
-        m_drive.tankDrive(left, right, false);
+        //m_drive.tankDrive(left, right, false);
+        m_leftTalon.set(ControlMode.Velocity, left*3000);
+        m_rightTalon.set(ControlMode.Velocity, left*3000);
+        //m_rightTalon.set(ControlMode.Velocity, right*3000);
     }
 
     public void arcadeDrive(double speed, double rot) {
-        m_drive.arcadeDrive(speed, rot);
+        //m_drive.arcadeDrive(speed, rot);
     }
 
     public double getGyroRate() {
