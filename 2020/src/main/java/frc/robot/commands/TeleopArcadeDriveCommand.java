@@ -20,34 +20,17 @@ public class TeleopArcadeDriveCommand extends CommandBase {
     public TeleopArcadeDriveCommand(DrivetrainSubsystem drive) {
         addRequirements(drive);
         m_drive = drive;
-        m_pidL = new PIDController(DRIVETRAIN_LEFT_KP, DRIVETRAIN_LEFT_KI, DRIVETRAIN_LEFT_KD);
-        m_pidR = new PIDController(DRIVETRAIN_RIGHT_KP, DRIVETRAIN_RIGHT_KI, DRIVETRAIN_RIGHT_KD);
-
-        Shuffleboard.getTab("config").addNumber("Left Drive PID Error", () -> m_pidL.getVelocityError());
-        Shuffleboard.getTab("config").addNumber("Right Drive PID Error", () -> m_pidR.getVelocityError());
-        Shuffleboard.getTab("config").addNumber("Left Drive PID Value", () -> m_drive.getRateLeft());
-        Shuffleboard.getTab("config").addNumber("Right Drive PID Value", () -> m_drive.getRateRight());
-        Shuffleboard.getTab("config").addNumber("Left Drive PID Setpoint", () -> m_pidL.getSetpoint());
-        Shuffleboard.getTab("config").addNumber("Right Drive PID Setpoint", () -> m_pidR.getSetpoint());
     }
 
-    public void setSuppliers(DoubleSupplier left, DoubleSupplier right) {
-        m_speedSupplier = left;
-        m_rotationSupplier = right;
+    public void setSuppliers(DoubleSupplier speed, DoubleSupplier rot) {
+        m_speedSupplier = speed;
+        m_rotationSupplier = rot;
     }
 
     @Override
     public void execute() {
-        
-        System.out.println("Running motors at I: " + m_speedSupplier.getAsDouble() + ", " + m_rotationSupplier.getAsDouble() + " ");
-
-        double[] tank = convertToTank(m_speedSupplier.getAsDouble(), m_rotationSupplier.getAsDouble());
-        double l = m_pidL.calculate(m_drive.getRateLeft(), tank[0] * DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND), r = m_pidR.calculate(m_drive.getRateRight(), tank[1] * DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND);
-
-        System.out.println("LEFT: " + m_drive.getRateLeft() + " " + tank[0] * DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND + " " + l);
-        System.out.println("RIGHT: " + m_drive.getRateRight() + " " + tank[1] * DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND + " " + r);
-        m_drive.tankDrive(l, r);
-
+        System.out.println("l: "+ m_speedSupplier.getAsDouble() +"r: "+ m_rotationSupplier.getAsDouble());
+        m_drive.tankDrive(convertToTank(m_speedSupplier.getAsDouble(), m_rotationSupplier.getAsDouble()*0.65));
     }
 
     private static double[] convertToTank(double speed, double rot) {

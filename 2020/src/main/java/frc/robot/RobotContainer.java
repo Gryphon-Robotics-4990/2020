@@ -17,8 +17,8 @@ public class RobotContainer {
     private final StorageSubsystem m_storage  = new StorageSubsystem();
 
     //TODO Add drivetrain commands
-    //private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
-    private final TeleopTankDriveCommand m_teleopTankDriveCommand = new TeleopTankDriveCommand(m_drivetrain);
+    private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
+    //private final TeleopTankDriveCommand m_teleopTankDriveCommand = new TeleopTankDriveCommand(m_drivetrain);
     
 
 
@@ -29,14 +29,14 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-
-        //m_teleopArcadeDriveCommand.setSuppliers(() -> -1 * joystickDrive.getRawAxis(AxisF310.JoystickLeftY), () -> joystickDrive.getRawAxis(AxisF310.JoystickRightX));
-        m_teleopTankDriveCommand.setSuppliers(() -> joystickDrive.getRawAxis(AxisF310.JoystickLeftY), () -> joystickDrive.getRawAxis(AxisF310.JoystickRightY));
+        //Wow that's ugly.
+        m_teleopArcadeDriveCommand.setSuppliers(() -> -1 * Math.copySign(Math.pow(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), 2), joystickDrive.getRawAxis(AxisF310.JoystickLeftY)), () -> -1 * Math.copySign(Math.pow(joystickDrive.getRawAxis(AxisF310.JoystickRightX), 2), joystickDrive.getRawAxis(AxisF310.JoystickRightX)));
+        //m_teleopTankDriveCommand.setSuppliers(() -> joystickDrive.getRawAxis(AxisF310.JoystickLeftY), () -> joystickDrive.getRawAxis(AxisF310.JoystickRightY));
     }
 
     private void configureDefaultCommands() {
-        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopTankDriveCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
+        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopTankDriveCommand);
     
     }
 

@@ -18,7 +18,7 @@ public class JoystickF310 extends Joystick {
 	}
 
 	public double getRawAxis(AxisF310 axis) {
-		return this.getRawAxis(axis.ordinal());
+		return Math.abs(getRawAxis(axis.ordinal())) < 0.05 ? 0 : getRawAxis(axis.ordinal());
 	}
 
 	public static enum POVF310 {

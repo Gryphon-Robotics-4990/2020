@@ -63,23 +63,30 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private void configureTalonClosedLoops() {
         m_leftTalon.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 5);
-        m_leftTalon.config_kP(0, 0.5);
+        m_leftTalon.config_kP(0, 0.6);
         m_leftTalon.config_kI(0, 0.0);
-        m_leftTalon.config_kD(0, 15);
+        m_leftTalon.config_kD(0, 1.5);
         m_leftTalon.config_kF(0, 0.3);
+        m_leftTalon.configClosedloopRamp(0.3);
 
         m_rightTalon.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 5);
-        m_rightTalon.config_kP(0, 0.5);
+        m_rightTalon.config_kP(0, 1.1);
         m_rightTalon.config_kI(0, 0.0);
-        m_rightTalon.config_kD(0, 15);
+        m_rightTalon.config_kD(0, 2);
         m_rightTalon.config_kF(0, 0.3);
+        m_rightTalon.configClosedloopRamp(0.3);
     }
 
     public void tankDrive(double left, double right) {
         //m_drive.tankDrive(left, right, false);
         m_leftTalon.set(ControlMode.Velocity, left*3000);
-        m_rightTalon.set(ControlMode.Velocity, left*3000);
+        m_rightTalon.set(ControlMode.Velocity, -right*3000);
         //m_rightTalon.set(ControlMode.Velocity, right*3000);
+    }
+
+    public void tankDrive(double[] speeds) {
+        tankDrive(speeds[0],speeds[1]);
+
     }
 
     public void arcadeDrive(double speed, double rot) {
