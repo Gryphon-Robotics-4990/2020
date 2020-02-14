@@ -6,6 +6,7 @@ public final class Constants {
     public static int PORT_JOYSTICK_DRIVE = 0;
     public static int PORT_JOYSTICK_OPERATOR = 1;
 
+<<<<<<< Updated upstream
     public static int CAN_PCM = 12;
     public static int CAN_SHOOTER_FIRE_TALONSRX = 36;
     public static int CAN_SHOOTER_AIM_TALONSRX = 36;
@@ -41,4 +42,12 @@ public final class Constants {
 
     public static double ENCODER_RESOLUTION = 4096;
     public static int TALON_TIMEOUT_MS = 5;
+=======
+    public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = -1;
+    public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = -1;
+    public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = -1;
+    public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = -1;
+    public static int CAN_CARGO_A_TALONSRX = 32;
+    public static int CAN_CARGO_B_TALONSRX = 35;
+>>>>>>> Stashed changes
 }
